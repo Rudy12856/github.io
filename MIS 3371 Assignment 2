@@ -11,18 +11,6 @@
             color: #333;
             margin: 20px;
         }
-        form {
-            max-width: 700px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-        }
         fieldset {
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -149,7 +137,6 @@
                        title="Obscured ID field. Must be a valid ID format.">
                 <div class="note">Masked field for privacy and security.</div>
             </div>
-        </fieldset>
 
         <!-- BLOCK 2: CONTACT INFO -->
         <fieldset>
@@ -170,7 +157,6 @@
                        title="Must match 000-000-0000">
                 <div class="note">Format: 000-000-0000</div>
             </div>
-        </fieldset>
 
         <!-- BLOCK 3: ADDRESS -->
         <fieldset>
@@ -231,7 +217,7 @@
                 <input type="text" id="zipCode" name="zipCode" required
                        pattern="^\d{5}(-\d{4})?$" maxlength="10"
                        title="5 digits or Zip+4 format (e.g. 77002-1234)">
-                <div class="note">Accepts 5 digits or 5+4 format. Zip+4 will be truncated on submission.</div>
+                <div class="note">Accepts 5 digits or 5+4 format. Zip+4 will be truncated immediately.</div>
             </div>
         </fieldset>
 
@@ -248,22 +234,6 @@
                     <label><input type="checkbox" name="history" value="flu"> Seasonal Influenza</label>
                     <label><input type="checkbox" name="history" value="mumps"> Mumps</label>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Housing Status:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="housing" value="own" required> Own</label>
-                    <label><input type="radio" name="housing" value="rent"> Rent</label>
-                    <label><input type="radio" name="housing" value="unsure"> Unsure</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="salaryRange">Desired Annual Salary Target Range:</label>
-                <input type="range" id="salaryRange" name="salaryRange" 
-                       min="20000" max="200000" step="5000" value="50000">
-                <span id="salaryDisplay" class="slider-value">$50,000</span>
             </div>
 
             <div class="form-group">
@@ -313,28 +283,6 @@
             moveInInput.min = today.toISOString().split('T')[0];
         });
 
-        // --- SLIDER VALUE INTERACTIVE UPDATE (oninput event) ---
-        const salaryRange = document.getElementById('salaryRange');
-        const salaryDisplay = document.getElementById('salaryDisplay');
-        
-        salaryRange.addEventListener('input', (e) => {
-            const formattedValue = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                maximumFractionDigits: 0
-            }).format(e.target.value);
-            salaryDisplay.textContent = formattedValue;
-        });
-
-        // --- TEXTAREA WATCHDOG: PREVENT DOUBLE QUOTES ---
-        const commentsArea = document.getElementById('comments');
-        commentsArea.addEventListener('input', (e) => {
-            if (e.target.value.includes('"')) {
-                alert('Double quotes (") are restricted to protect code and database integrity.');
-                e.target.value = e.target.value.replace(/"/g, ''); // Instantly scrub it
-            }
-        });
-
         // --- FORM SUBMIT PROCESSOR (ADVANCED EDITS / REDISPLAYS) ---
         document.getElementById('advancedForm').addEventListener('submit', (e) => {
             const password = document.getElementById('password').value;
@@ -349,18 +297,3 @@
                 return;
             }
 
-            // 2. User ID Transformation (Convert to lowercase & update view)
-            userIdInput.value = userIdInput.value.toLowerCase();
-
-            // 3. Zip Code Truncation & Redisplay Rule
-            if (zipInput.value.includes('-')) {
-                const truncatedZip = zipInput.value.split('-')[0];
-                zipInput.value = truncatedZip;
-                alert(`Notice: Your Zip+4 extension has been truncated. Re-displaying code as: ${truncatedZip}`);
-            }
-
-            alert("Form verification passed successfully! Submitting updated values.");
-        });
-    </script>
-</body>
-</html>
