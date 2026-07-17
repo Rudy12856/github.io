@@ -1,0 +1,27 @@
+Sequence	varname	type	size	required	permission s=system, u=user	description	key	pattern/regex	minsize/value	default
+1	date_created	TIMESTAMP	20	s	s	date row was created		YYYYMMDDHHMMSS		
+2	date_modified	TIMESTAMP	20	s	s	date row was last modfied		YYYYMMDDHHMMSS		
+3	date_accessed	TIMESTAMP	20	s	s	date row was last querried		YYYYMMDDHHMMSS		
+4	date_inactive	TIMESTAMP	20	s	s	date row was made inactive/deleted		YYYYMMDDHHMMSS		
+5	usertype	string / VARCHAR	1		s	user type, aka a=admin, u=user, e=employee, w=web	foreign		1	
+6	status	string	1	n	s	aka a=active,s=suspended,d=delinquent,i=inactive	foreign			
+7	firstname	string	30	y	u	First Name			2	
+8	middleinit	string	1	n	u	Middle Initial			0	
+9	lastname	string	30	y	u	Last Name			2	
+10	addr1	string	30	y	u	Address line 1			5	
+11	addr2	string	30	n	u	Optional address line 2				
+12	city	string	30	y	u	City			2	
+13	state	string	2	y	u	State Code			2	
+14	Zip	string	5	y	u	Zip			5	
+15	phone1	string	10	n	u	Phone number		NXXNXXXXXX	10	
+16	email	string	40	y	u	Email address			5	
+17	userid	string	15	y	u	user id	primary	"[A-Za-z]+[A-Za-z0-9-_]{8,}"	6	
+18	password	string	15	y	u	plaintext password. Do not store actual password. This is a placeholder		"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 	8	
+19	password_hashed	string	50	y	s	hashed password				
+20	storage	string	1	n	u	Need Storage? N=no or not indicated, Y=yes				0
+21	space_needed	INT	1	y	u	1=standard, 2=extended, 3=doublewide				1
+22	movein_date	date	8	y	u	Date of desired move in		YYYYMMDD		
+23	budget	currency	10.2	y	u			+000000000.00		0
+24	about	string	256	n	u	tell us about yourself				
+25	passwd_date	date	8		s	date pw was changed		YYYYMMDD		
+	Vaccinated	Boolean				0=no,1=yes				
